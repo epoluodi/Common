@@ -136,6 +136,17 @@
     NSTimeInterval timeBetween = [now timeIntervalSinceDate:date];
     NSLog(@"时间间隔 %f",timeBetween);
     
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+
+    NSDateComponents *compsnow = [[NSDateComponents alloc] init];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags =NSYearCalendarUnit |NSMonthCalendarUnit |NSDayCalendarUnit | NSWeekdayCalendarUnit |
+    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    
+    compsnow = [calendar components:unitFlags fromDate:now];
+    comps = [calendar components:unitFlags fromDate:date];
+    
+    
     float day =timeBetween  / 3600 / 24 ;
     
     if (day > 7)
@@ -143,7 +154,7 @@
         [formatter setDateFormat:@"MM-dd HH:mm"];
         return [formatter stringFromDate:date];
     }
-    else if (day< 1)
+    else if (day< 1 && comps.day == compsnow.day)
     {
         [formatter setDateFormat:@"今天 HH:mm"];
         return [formatter stringFromDate:date];
